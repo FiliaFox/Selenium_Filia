@@ -8,3 +8,7 @@ class User(object):
     @classmethod
     def Admin(cls):
         return cls(username="admin", password="admin")
+
+    @classmethod
+    def rand(cls):
+        return cls(username="user1234", password="sdfsf")

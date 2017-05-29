@@ -1,13 +1,17 @@
 from selenium.webdriver.support.expected_conditions import *
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+
 
 class Application(object):
 
-    def __init__(self, driver):
+    def __init__(self, driver, base_url):
         self.driver = driver
+        self.base_url = base_url
         self.wait = WebDriverWait(driver, 10)
 
     def go_to_home_page(self):
-        self.driver.get("http://localhost:8888/php4dvd/")
+        self.driver.get(self.base_url)
 
     def logout(self):
         driver = self.driver
@@ -25,7 +29,15 @@ class Application(object):
     def is_logged_in(self):
         driver = self.driver
         try:
-            self.wait.until(presence_of_element_located((By.CSS_SELECTOR, 'nav')))
+            self.wait.until(presence_of_element_located((By.CSS_SELECTOR, "nav")))
             return True
-        except WebDriverExeption:
+        except WebDriverException:
+            return False
+
+    def is_not_logged_in(self):
+        driver = self.driver
+        try:
+            self.wait.until(presence_of_element_located((By.ID, "loginform")))
+            return True
+        except WebDriverException:
             return False
