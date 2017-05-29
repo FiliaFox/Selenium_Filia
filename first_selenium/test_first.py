@@ -1,19 +1,15 @@
 # Код для авторизации в приложении php4dvd
-from selenium import webdriver
+
 from first_selenium.model.user import User
-from selenium.common.exceptions import *
-from first_selenium.selenium_fixture import app
 
 
 def test_login_with_valid_credentials(app):
-    app.go_to_home_page()
-    app.login(User.Admin())
+    app.ensure_logout()
+    app.login(User.admin())
     assert app.is_logged_in()
-    app.logout()
-    assert app.is_not_logged_in()
 
 
 def test_login_with_invalid_credentials(app):
-    app.go_to_home_page()
+    app.ensure_logout()
     app.login(User.rand())
     assert app.is_not_logged_in()
